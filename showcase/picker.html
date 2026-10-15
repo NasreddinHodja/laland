@@ -1,0 +1,120 @@
+<title>laland picker</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Source+Code+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: a grid of numbered candidate editor panes; the page frame itself stays a plain dark neutral so it doesn't bias the choice. */
+:root {
+  --page: #0c0c10; --ink: #e8e8ee; --muted: #8a8a99; --line: #24242c;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
+  --font-code: "Source Code Pro", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font: 16px/1.5 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 64px; }
+.wrap { max-width: 1400px; margin: 0 auto; display: grid; gap: 28px; }
+h1 { font: 700 2.4rem/1.1 var(--font-display); margin: 0; text-wrap: balance; }
+.intro { color: var(--muted); max-width: 70ch; margin: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 430px), 1fr)); gap: 20px; }
+.cand { background: var(--bg); color: var(--fg); border-radius: 12px; overflow: hidden; display: grid; grid-template-rows: auto auto 1fr auto auto; min-width: 0; border: 1px solid var(--border); }
+.cand header { display: flex; gap: 14px; align-items: center; padding: 14px 16px; background: var(--bg-alt); }
+.num { font: 700 1.8rem/1 var(--font-display); color: var(--pink); min-width: 1.2em; }
+.cand h2 { font: 600 1.05rem/1.2 var(--font-body); margin: 0; }
+.cand small { color: var(--comment); font: .72rem/1.3 var(--font-code); }
+.chips { display: flex; height: 10px; }
+.chips span { flex: 1; }
+pre { margin: 0; padding: 12px 0; overflow-x: auto; font: .8rem/1.6 var(--font-code); }
+pre > * { }
+pre { padding-inline: 16px; }
+.kw { color: var(--f-kw); } .fn { color: var(--f-fn); } .fc { color: var(--f-fc); font-style: italic; }
+.ty { color: var(--f-ty); } .str { color: var(--f-str); } .con { color: var(--f-con); } .num { color: var(--f-num); }
+.var { color: var(--f-var); } .vu { color: var(--f-vu); } .op { color: var(--f-op); } .pun { color: var(--f-pun); }
+.prop { color: var(--f-prop); font-weight: 600; } .bi { color: var(--f-bi); } .com { color: var(--f-com); } .doc { color: var(--f-doc); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; padding: 10px 16px; font: .72rem/1.4 var(--font-code); border-bottom: 1px solid var(--base4); }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.legend em { color: var(--base5); font-style: normal; } .legend small { color: var(--base5); }
+.hl { background: var(--hl-line); display: inline-block; width: calc(100% + 32px); margin-inline: -16px; padding-inline: 16px; }
+.cur { background: var(--pink); }
+.cand { --border: var(--base4); --comment: var(--base5); --region: var(--base3); }
+.sel { background: var(--region); }
+.add { color: var(--green); } .del { color: var(--red); }
+.ml { display: flex; align-items: center; gap: 10px; background: var(--bg-alt); font: .74rem/1 var(--font-code); padding: 5px 12px 5px 0; white-space: nowrap; overflow: hidden; }
+.ml i { width: 4px; align-self: stretch; background: var(--pink); }
+.ml b { background: var(--pink); color: var(--bg); padding: 2px 5px; border-radius: 3px; }
+.ml span { color: var(--comment); } .ml em { flex: 1; }
+.ml .er { color: var(--red); } .ml .wa { color: var(--orange); } .ml .br { color: var(--cyan); }
+.cand footer { font: .7rem/1.3 var(--font-code); color: var(--comment); padding: 8px 16px; border-top: 1px solid var(--border); }
+.ys { border-radius: 12px; padding: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.y { display: grid; gap: 4px; min-width: 0; }
+.y b { font: 700 1.2rem/1 var(--font-display); color: var(--ink); }
+.y code { font: 600 1.05rem/1.3 var(--font-code); }
+.y small { font: .72rem/1.3 var(--font-code); color: var(--muted); }
+</style>
+<div class="wrap">
+  <h1>laland picker</h1>
+  <p class="intro">Round 4: built the way a doom theme works. A doom theme sets a handful of slots (keywords, functions, strings, type, constants, numbers, builtin, variables, operators, comments), and doom-themes derives every Emacs face from them: function calls are functions blended 70% into the text color, punctuation is operators at 25%, properties are keywords at 60%, and so on. Card 1 fills the slots the way your current doom-dracula does (strings yellow), card 2 the way doom-one does (strings green). Same laland colors in both. Strings use the yellow you pick below.</p>
+  <div class="grid">
+<article class="cand" style="--pink:#f07fb8;--red:#f08381;--orange:#f19959;--yellow:#f5c166;--green:#5eeb87;--cyan:#5fe4f2;--blue:#7baeef;--violet:#ba9cef;--teal:#4bb9b2;--bg:#090e21;--bg-alt:#040718;--base3:#1c2442;--base4:#1a2135;--base5:#7684b1;--hl-line:#10172c;--fg:#eef2fa;--f-kw:#f07fb8;--f-fn:#5eeb87;--f-fc:#89edaa;--f-ty:#ba9cef;--f-str:#f5c166;--f-con:#5fe4f2;--f-num:#ba9cef;--f-var:#f9cce3;--f-vu:#f3dfee;--f-op:#ba9cef;--f-pun:#e1dcf7;--f-prop:#efadd2;--f-bi:#f19959;--f-com:#7684b1;--f-doc:#98a3c4">
+  <header><b class="num">1</b><div><h2>doom-dracula slots</h2><small>Midnight vivid · accents at 80% saturation · bg #090e21</small></div></header>
+  <div class="legend"><span><i style="background:#f07fb8"></i>keywords <em>pink</em> <small>Lc 53</small></span><span><i style="background:#5eeb87"></i>functions <em>green</em> <small>Lc 78</small></span><span><i style="background:#f5c166"></i>strings <em>yellow</em> <small>Lc 74</small></span><span><i style="background:#ba9cef"></i>type <em>violet</em> <small>Lc 56</small></span><span><i style="background:#5fe4f2"></i>constants <em>cyan</em> <small>Lc 79</small></span><span><i style="background:#ba9cef"></i>numbers <em>violet</em> <small>Lc 56</small></span><span><i style="background:#f19959"></i>builtin <em>orange</em> <small>Lc 58</small></span><span><i style="background:#f9cce3"></i>variables <em>lighten pink</em> <small>Lc 83</small></span><span><i style="background:#ba9cef"></i>operators <em>violet</em> <small>Lc 56</small></span><span><i style="background:#7684b1"></i>comments <em>base5</em> <small>Lc 37</small></span></div>
+  <pre><span class="com"># picker.py: font-lock faces exactly as doom-themes computes them</span>
+<span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass
+<span class="kw">import</span> math
+
+<span class="ty">@dataclass</span><span class="pun">(</span><span class="var">frozen</span><span class="op">=</span><span class="con">True</span><span class="pun">)</span>
+<span class="kw">class</span> <span class="ty">Swatch</span><span class="pun">:</span>
+    <span class="doc">"""One named color in OKLCH."""</span>
+    <span class="prop">name</span><span class="pun">:</span> <span class="bi">str</span>
+    <span class="prop">lc</span><span class="pun">:</span> <span class="bi">float</span> <span class="op">=</span> <span class="num">60.0</span>
+
+<span class="kw">def</span> <span class="fn">contrast</span><span class="pun">(</span><span class="var">txt</span><span class="pun">:</span> <span class="bi">str</span><span class="pun">,</span> <span class="var">bg</span><span class="pun">:</span> <span class="bi">str</span> <span class="op">=</span> <span class="str">"#090e21"</span><span class="pun">)</span> <span class="op">-&gt;</span> <span class="bi">float</span><span class="pun">:</span>
+    <span class="var">t</span><span class="pun">,</span> <span class="var">b</span> <span class="op">=</span> <span class="fc">luminance</span><span class="pun">(</span><span class="vu">txt</span><span class="pun">),</span> <span class="fc">luminance</span><span class="pun">(</span><span class="vu">bg</span><span class="pun">)</span>
+<span class="hl">    <span class="kw">if</span> <span class="fc">abs</span><span class="pun">(</span><span class="vu">b</span> <span class="op">-</span> <span class="vu">t</span><span class="pun">)</span> <span class="op">&lt;</span> <span class="num">0.0005</span><span class="pun">:</span><span class="cur"> </span></span>
+        <span class="kw">return</span> <span class="num">0.0</span>
+    <span class="kw">return</span> <span class="pun">(</span><span class="vu">b</span> <span class="op">**</span> <span class="num">0.56</span> <span class="op">-</span> <span class="vu">t</span> <span class="op">**</span> <span class="num">0.57</span><span class="pun">)</span> <span class="op">*</span> <span class="num">114</span>
+
+<span class="var">PINK</span> <span class="op">=</span> <span class="fc">Swatch</span><span class="pun">(</span><span class="str">"pink"</span><span class="pun">,</span> <span class="var">lc</span><span class="op">=</span><span class="fc">contrast</span><span class="pun">(</span><span class="str">"#f07fb8"</span><span class="pun">))</span>
+<span class="fc">print</span><span class="pun">(</span><span class="str">f"</span><span class="pun">{</span><span class="vu">PINK</span><span class="pun">.</span><span class="prop" style="font-weight:400">name</span><span class="pun">}</span><span class="str">: </span><span class="pun">{</span><span class="vu">PINK</span><span class="pun">.</span><span class="prop" style="font-weight:400">lc</span><span class="pun">:.0f}</span><span class="str">"</span><span class="pun">)</span>
+
+<span class="pun">(</span><span class="kw">defun</span> <span class="fn">laland-rebuild</span> <span class="pun">()</span>
+  <span class="doc">"Rebuild and reload the theme."</span>
+  <span class="pun">(</span><span class="kw">interactive</span><span class="pun">)</span>
+  <span class="pun">(</span><span class="fc">shell-command</span> <span class="str">"python3 build.py"</span><span class="pun">)</span>
+  <span class="pun">(</span><span class="fc">load-theme</span> <span class="con">'doom-laland</span> <span class="con">t</span><span class="pun">))</span></pre>
+  <div class="ml"><i></i><b>N</b> picker.py <span>12:42</span><em></em><span class="er">✖ 1</span><span class="wa">⚠ 2</span><span class="br">main</span></div>
+</article>
+<article class="cand" style="--pink:#f07fb8;--red:#f08381;--orange:#f19959;--yellow:#f5c166;--green:#5eeb87;--cyan:#5fe4f2;--blue:#7baeef;--violet:#ba9cef;--teal:#4bb9b2;--bg:#090e21;--bg-alt:#040718;--base3:#1c2442;--base4:#1a2135;--base5:#7684b1;--hl-line:#10172c;--fg:#eef2fa;--f-kw:#7baeef;--f-fn:#f07fb8;--f-fc:#efa2cc;--f-ty:#f5c166;--f-str:#5eeb87;--f-con:#ba9cef;--f-num:#f19959;--f-var:#f6b2d4;--f-vu:#f2d2e7;--f-op:#7baeef;--f-pun:#d1e1f7;--f-prop:#a9c9f3;--f-bi:#f07fb8;--f-com:#7684b1;--f-doc:#98a3c4">
+  <header><b class="num">2</b><div><h2>doom-one slots</h2><small>Midnight vivid · accents at 80% saturation · bg #090e21</small></div></header>
+  <div class="legend"><span><i style="background:#7baeef"></i>keywords <em>blue</em> <small>Lc 56</small></span><span><i style="background:#f07fb8"></i>functions <em>pink</em> <small>Lc 53</small></span><span><i style="background:#5eeb87"></i>strings <em>green</em> <small>Lc 78</small></span><span><i style="background:#f5c166"></i>type <em>yellow</em> <small>Lc 74</small></span><span><i style="background:#ba9cef"></i>constants <em>violet</em> <small>Lc 56</small></span><span><i style="background:#f19959"></i>numbers <em>orange</em> <small>Lc 58</small></span><span><i style="background:#f07fb8"></i>builtin <em>pink</em> <small>Lc 53</small></span><span><i style="background:#f6b2d4"></i>variables <em>lighten pink</em> <small>Lc 72</small></span><span><i style="background:#7baeef"></i>operators <em>blue</em> <small>Lc 56</small></span><span><i style="background:#7684b1"></i>comments <em>base5</em> <small>Lc 37</small></span></div>
+  <pre><span class="com"># picker.py: font-lock faces exactly as doom-themes computes them</span>
+<span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass
+<span class="kw">import</span> math
+
+<span class="ty">@dataclass</span><span class="pun">(</span><span class="var">frozen</span><span class="op">=</span><span class="con">True</span><span class="pun">)</span>
+<span class="kw">class</span> <span class="ty">Swatch</span><span class="pun">:</span>
+    <span class="doc">"""One named color in OKLCH."""</span>
+    <span class="prop">name</span><span class="pun">:</span> <span class="bi">str</span>
+    <span class="prop">lc</span><span class="pun">:</span> <span class="bi">float</span> <span class="op">=</span> <span class="num">60.0</span>
+
+<span class="kw">def</span> <span class="fn">contrast</span><span class="pun">(</span><span class="var">txt</span><span class="pun">:</span> <span class="bi">str</span><span class="pun">,</span> <span class="var">bg</span><span class="pun">:</span> <span class="bi">str</span> <span class="op">=</span> <span class="str">"#090e21"</span><span class="pun">)</span> <span class="op">-&gt;</span> <span class="bi">float</span><span class="pun">:</span>
+    <span class="var">t</span><span class="pun">,</span> <span class="var">b</span> <span class="op">=</span> <span class="fc">luminance</span><span class="pun">(</span><span class="vu">txt</span><span class="pun">),</span> <span class="fc">luminance</span><span class="pun">(</span><span class="vu">bg</span><span class="pun">)</span>
+<span class="hl">    <span class="kw">if</span> <span class="fc">abs</span><span class="pun">(</span><span class="vu">b</span> <span class="op">-</span> <span class="vu">t</span><span class="pun">)</span> <span class="op">&lt;</span> <span class="num">0.0005</span><span class="pun">:</span><span class="cur"> </span></span>
+        <span class="kw">return</span> <span class="num">0.0</span>
+    <span class="kw">return</span> <span class="pun">(</span><span class="vu">b</span> <span class="op">**</span> <span class="num">0.56</span> <span class="op">-</span> <span class="vu">t</span> <span class="op">**</span> <span class="num">0.57</span><span class="pun">)</span> <span class="op">*</span> <span class="num">114</span>
+
+<span class="var">PINK</span> <span class="op">=</span> <span class="fc">Swatch</span><span class="pun">(</span><span class="str">"pink"</span><span class="pun">,</span> <span class="var">lc</span><span class="op">=</span><span class="fc">contrast</span><span class="pun">(</span><span class="str">"#f07fb8"</span><span class="pun">))</span>
+<span class="fc">print</span><span class="pun">(</span><span class="str">f"</span><span class="pun">{</span><span class="vu">PINK</span><span class="pun">.</span><span class="prop" style="font-weight:400">name</span><span class="pun">}</span><span class="str">: </span><span class="pun">{</span><span class="vu">PINK</span><span class="pun">.</span><span class="prop" style="font-weight:400">lc</span><span class="pun">:.0f}</span><span class="str">"</span><span class="pun">)</span>
+
+<span class="pun">(</span><span class="kw">defun</span> <span class="fn">laland-rebuild</span> <span class="pun">()</span>
+  <span class="doc">"Rebuild and reload the theme."</span>
+  <span class="pun">(</span><span class="kw">interactive</span><span class="pun">)</span>
+  <span class="pun">(</span><span class="fc">shell-command</span> <span class="str">"python3 build.py"</span><span class="pun">)</span>
+  <span class="pun">(</span><span class="fc">load-theme</span> <span class="con">'doom-laland</span> <span class="con">t</span><span class="pun">))</span></pre>
+  <div class="ml"><i></i><b>N</b> picker.py <span>12:42</span><em></em><span class="er">✖ 1</span><span class="wa">⚠ 2</span><span class="br">main</span></div>
+</article>
+  </div>
+  <h1 style="font-size:1.6rem">Yellow (strings in card 1, types in card 2)</h1>
+<div class="ys" style="background:#090e21"><div class="y"><b>Y1</b><code style="color:#f5c166">"python3 build.py" f"pink: "</code><small>Gold · #f5c166 · Lc 74</small></div><div class="y"><b>Y2</b><code style="color:#f2de94">"python3 build.py" f"pink: "</code><small>Butter · #f2de94 · Lc 86</small></div><div class="y"><b>Y3</b><code style="color:#f5e05e">"python3 build.py" f"pink: "</code><small>Warm lemon · #f5e05e · Lc 87</small></div><div class="y"><b>Y4</b><code style="color:#f2ec95">"python3 build.py" f"pink: "</code><small>Pale lemon · #f2ec95 · Lc 93</small></div><div class="y"><b>Y5</b><code style="color:#f7b667">"python3 build.py" f"pink: "</code><small>Honey · #f7b667 · Lc 70</small></div></div>
+</div>

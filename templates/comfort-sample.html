@@ -1,0 +1,40 @@
+<span class="c"># Reading test: a real-sized chunk, read it for a minute</span>
+<span class="k">from</span> pathlib <span class="k">import</span> Path
+<span class="k">import</span> tomllib
+
+<span class="cn">FLOORS</span> <span class="o">=</span> <span class="o">{</span><span class="s">"code"</span><span class="o">:</span> <span class="n">60</span><span class="o">,</span> <span class="s">"comment"</span><span class="o">:</span> <span class="n">45</span><span class="o">,</span> <span class="s">"linenr"</span><span class="o">:</span> <span class="n">30</span><span class="o">}</span>
+
+
+<span class="k">class</span> <span class="t">Palette</span><span class="o">:</span>
+    <span class="d">"""Load palette.toml and resolve every doom slot to a hex color.
+
+    Slots may reference colors by name or through doom's helpers,
+    for example "lighten:magenta:0.4" or "blend:magenta:bg:0.22".
+    """</span>
+
+    <span class="k">def</span> <span class="f">__init__</span><span class="o">(</span><span class="b">self</span><span class="o">,</span> <span class="p">path</span><span class="o">:</span> <span class="t">Path</span><span class="o">,</span> <span class="p">variant</span><span class="o">:</span> <span class="t">str</span> <span class="o">=</span> <span class="s">"dark"</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="cn">None</span><span class="o">:</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">raw</span> <span class="o">=</span> tomllib<span class="o">.</span><span class="fc">loads</span><span class="o">(</span>path<span class="o">.</span><span class="fc">read_text</span><span class="o">())[</span>variant<span class="o">]</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">:</span> <span class="t">dict</span><span class="o">[</span><span class="t">str</span><span class="o">,</span> <span class="t">str</span><span class="o">]</span> <span class="o">=</span> <span class="o">{}</span>
+
+    <span class="k">def</span> <span class="f">get</span><span class="o">(</span><span class="b">self</span><span class="o">,</span> <span class="p">slot</span><span class="o">:</span> <span class="t">str</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="t">str</span><span class="o">:</span>
+        <span class="k">if</span> slot <span class="k">in</span> <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">:</span>
+            <span class="k">return</span> <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">[</span>slot<span class="o">]</span>
+        <span class="c"># unknown slots fall back to the foreground, like doom does</span>
+        expr <span class="o">=</span> <span class="b">self</span><span class="o">.</span><span class="v">raw</span><span class="o">[</span><span class="s">"slots"</span><span class="o">].</span><span class="fc">get</span><span class="o">(</span>slot<span class="o">,</span> <span class="s">"fg"</span><span class="o">)</span>
+        kind<span class="o">,</span> <span class="o">*</span>args <span class="o">=</span> expr<span class="o">.</span><span class="fc">split</span><span class="o">(</span><span class="s">":"</span><span class="o">)</span>
+        <span class="k">match</span> kind<span class="o">:</span>
+            <span class="k">case</span> <span class="s">"lighten"</span><span class="o">:</span>
+                value <span class="o">=</span> <span class="fc">lighten</span><span class="o">(</span><span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>args<span class="o">[</span><span class="n">0</span><span class="o">]),</span> <span class="b">float</span><span class="o">(</span>args<span class="o">[</span><span class="n">1</span><span class="o">]))</span>
+            <span class="k">case</span> <span class="s">"blend"</span><span class="o">:</span>
+                a<span class="o">,</span> b<span class="o">,</span> t <span class="o">=</span> args
+                value <span class="o">=</span> <span class="fc">blend</span><span class="o">(</span><span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>a<span class="o">),</span> <span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>b<span class="o">),</span> <span class="b">float</span><span class="o">(</span>t<span class="o">))</span>
+            <span class="k">case</span> _<span class="o">:</span>
+                value <span class="o">=</span> <span class="b">self</span><span class="o">.</span><span class="v">raw</span><span class="o">[</span><span class="s">"colors"</span><span class="o">][</span>kind<span class="o">]</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">[</span>slot<span class="o">]</span> <span class="o">=</span> value
+        <span class="k">return</span> value
+
+
+<span class="k">def</span> <span class="f">report</span><span class="o">(</span><span class="p">pal</span><span class="o">:</span> <span class="t">Palette</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="cn">None</span><span class="o">:</span>
+    <span class="k">for</span> role<span class="o">,</span> floor <span class="k">in</span> <span class="cn">FLOORS</span><span class="o">.</span><span class="fc">items</span><span class="o">():</span>
+        lc <span class="o">=</span> <span class="fc">apca</span><span class="o">(</span>pal<span class="o">.</span><span class="fc">get</span><span class="o">(</span>role<span class="o">),</span> pal<span class="o">.</span><span class="fc">get</span><span class="o">(</span><span class="s">"bg"</span><span class="o">))</span>
+        <span class="b">print</span><span class="o">(</span><span class="s">f"</span><span class="o">{</span>role<span class="o">:&lt;10}</span><span class="s"> Lc </span><span class="o">{</span>lc<span class="o">:5.1f}</span><span class="s"> </span><span class="o">{</span><span class="s">'ok'</span> <span class="k">if</span> lc <span class="o">&gt;=</span> floor <span class="k">else</span> <span class="s">'LOW'</span><span class="o">}</span><span class="e">\n</span><span class="s">"</span><span class="o">)</span>

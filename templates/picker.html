@@ -1,0 +1,63 @@
+<title>laland picker</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Source+Code+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: a grid of numbered candidate editor panes; the page frame itself stays a plain dark neutral so it doesn't bias the choice. */
+:root {
+  --page: #0c0c10; --ink: #e8e8ee; --muted: #8a8a99; --line: #24242c;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
+  --font-code: "Source Code Pro", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font: 16px/1.5 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 64px; }
+.wrap { max-width: 1400px; margin: 0 auto; display: grid; gap: 28px; }
+h1 { font: 700 2.4rem/1.1 var(--font-display); margin: 0; text-wrap: balance; }
+.intro { color: var(--muted); max-width: 70ch; margin: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 430px), 1fr)); gap: 20px; }
+.cand { background: var(--bg); color: var(--fg); border-radius: 12px; overflow: hidden; display: grid; grid-template-rows: auto auto 1fr auto auto; min-width: 0; border: 1px solid var(--border); }
+.cand header { display: flex; gap: 14px; align-items: center; padding: 14px 16px; background: var(--bg-alt); }
+.num { font: 700 1.8rem/1 var(--font-display); color: var(--pink); min-width: 1.2em; }
+.cand h2 { font: 600 1.05rem/1.2 var(--font-body); margin: 0; }
+.cand small { color: var(--comment); font: .72rem/1.3 var(--font-code); }
+.chips { display: flex; height: 10px; }
+.chips span { flex: 1; }
+pre { margin: 0; padding: 12px 0; overflow-x: auto; font: .8rem/1.6 var(--font-code); }
+pre > * { }
+pre { padding-inline: 16px; }
+.kw { color: var(--f-kw); } .fn { color: var(--f-fn); } .fc { color: var(--f-fc); font-style: italic; }
+.ty { color: var(--f-ty); } .str { color: var(--f-str); } .con { color: var(--f-con); } .num { color: var(--f-num); }
+.var { color: var(--f-var); } .vu { color: var(--f-vu); } .op { color: var(--f-op); } .pun { color: var(--f-pun); }
+.prop { color: var(--f-prop); font-weight: 600; } .bi { color: var(--f-bi); } .com { color: var(--f-com); } .doc { color: var(--f-doc); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; padding: 10px 16px; font: .72rem/1.4 var(--font-code); border-bottom: 1px solid var(--base4); }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.legend em { color: var(--base5); font-style: normal; } .legend small { color: var(--base5); }
+.hl { background: var(--hl-line); display: inline-block; width: calc(100% + 32px); margin-inline: -16px; padding-inline: 16px; }
+.cur { background: var(--pink); }
+.cand { --border: var(--base4); --comment: var(--base5); --region: var(--base3); }
+.sel { background: var(--region); }
+.add { color: var(--green); } .del { color: var(--red); }
+.ml { display: flex; align-items: center; gap: 10px; background: var(--bg-alt); font: .74rem/1 var(--font-code); padding: 5px 12px 5px 0; white-space: nowrap; overflow: hidden; }
+.ml i { width: 4px; align-self: stretch; background: var(--pink); }
+.ml b { background: var(--pink); color: var(--bg); padding: 2px 5px; border-radius: 3px; }
+.ml span { color: var(--comment); } .ml em { flex: 1; }
+.ml .er { color: var(--red); } .ml .wa { color: var(--orange); } .ml .br { color: var(--cyan); }
+.cand footer { font: .7rem/1.3 var(--font-code); color: var(--comment); padding: 8px 16px; border-top: 1px solid var(--border); }
+.ys { border-radius: 12px; padding: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.y { display: grid; gap: 4px; min-width: 0; }
+.y b { font: 700 1.2rem/1 var(--font-display); color: var(--ink); }
+.y code { font: 600 1.05rem/1.3 var(--font-code); }
+.y small { font: .72rem/1.3 var(--font-code); color: var(--muted); }
+</style>
+<div class="wrap">
+  <h1>laland picker</h1>
+  <p class="intro">Round 4: built the way a doom theme works. A doom theme sets a handful of slots (keywords, functions, strings, type, constants, numbers, builtin, variables, operators, comments), and doom-themes derives every Emacs face from them: function calls are functions blended 70% into the text color, punctuation is operators at 25%, properties are keywords at 60%, and so on. Card 1 fills the slots the way your current doom-dracula does (strings yellow), card 2 the way doom-one does (strings green). Same laland colors in both. Strings use the yellow you pick below.</p>
+  <div class="grid">
+<!--@CARDS@-->
+  </div>
+  <h1 style="font-size:1.6rem">Yellow (strings in card 1, types in card 2)</h1>
+<!--@YELLOWS@-->
+</div>

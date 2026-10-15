@@ -1,0 +1,219 @@
+<title>laland comfort</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Source+Code+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: three full-height editor panes side by side; the page frame is a plain dark neutral so it doesn't bias the choice. */
+:root {
+  --page: #0c0c10; --ink: #e8e8ee; --muted: #8a8a99;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
+  --font-code: "Source Code Pro", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font: 16px/1.5 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 64px; }
+.wrap { max-width: 1800px; margin: 0 auto; display: grid; gap: 24px; }
+h1 { font: 700 2.4rem/1.1 var(--font-display); margin: 0; }
+.intro { color: var(--muted); max-width: 75ch; margin: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 540px), 1fr)); gap: 20px; }
+.cand { background: var(--bg); color: var(--fg); border-radius: 12px; overflow: hidden; min-width: 0; border: 1px solid var(--border); }
+.cand header { display: flex; gap: 14px; align-items: center; padding: 14px 18px; background: var(--bg-alt); }
+.num { font: 700 1.8rem/1 var(--font-display); color: var(--cursor); min-width: 1.2em; }
+.cand h2 { font: 600 1.05rem/1.2 var(--font-body); margin: 0; }
+.cand small { color: var(--comment); font: .72rem/1.3 var(--font-code); }
+.stats { display: flex; flex-wrap: wrap; gap: 4px 12px; padding: 8px 18px; font: .72rem/1.4 var(--font-code); color: var(--comment); border-bottom: 1px solid var(--border); }
+.stats span { display: inline-flex; gap: 5px; align-items: center; }
+.stats i { width: 10px; height: 10px; border-radius: 2px; }
+pre { margin: 0; padding: 16px 18px; overflow-x: auto; font: 15px/1.65 var(--font-code); }
+.k { color: var(--keyword); } .f { color: var(--function); } .fc { color: var(--fcall); font-style: italic; }
+.s { color: var(--string); } .t { color: var(--type); } .n { color: var(--number); } .cn { color: var(--constant); }
+.b { color: var(--builtin); } .p { color: var(--param); } .v { color: var(--property); }
+.c { color: var(--comment); } .d { color: var(--doc); } .o { color: var(--punct); } .e { color: var(--escape); font-weight: 600; }
+</style>
+<div class="wrap">
+  <h1>laland keywords &amp; types</h1>
+  <p class="intro">Round 9: keywords and types. 1 is the current theme: a saturated sky blue on keywords, and the palest, brightest yellow on every type name, so types out-shout everything. A muted, grown-up mid blue turned out to collide with the pink functions for red-blind readers: to them the pink looks like a greyish periwinkle (#a4a4dd). So the new blues are pale and icy: <b>periwinkle</b> leans violet, <b>steel</b> is grey-blue, <b>cornflower</b> is the bluest. Types move to a calm <b>sea green</b>, so yellow is used only for warnings. A darker gold for types was tried and dropped: color-blind readers couldn't tell it from the orange numbers. Constants go back to a saturated violet, because the pale lavender looked like the icy keywords. Each card runs the color-blind check. Pick a number.</p>
+  <div class="grid">
+<article class="cand" style="--keyword:#5ec2ff;--function:#ff93dd;--fcall:#f7ace2;--string:#5be295;--type:#fbea83;--number:#fc9341;--constant:#e4d1fb;--builtin:#ff93dd;--param:#ffbeeb;--varuse:#f1d2ed;--comment:#92a3d4;--doc:#adbadf;--operator:#5ec2ff;--punct:#c2ddf3;--property:#93d0f9;--escape:#5ec2ff;--bg:#1b2236;--bg-alt:#141b2e;--bg-deep:#0f1425;--fg:#e3e6ef;--fg-dim:#b9c0d5;--hl-line:#141b2e;--surface:#252d45;--border:#252d45;--linenr:#767f9c;--linenr-cur:#ff93dd;--cursor:#ff93dd;--link:#ff93dd;--region:#4d3b5b;--search:#5e5e4d;--error:#ff7d7d;--warning:#fbea83;--success:#5be295;--info:#51e1f0;--added:#5be295;--deleted:#ff7d7d;--modified:#fc9341;--added-bg:#284849;--deleted-bg:#513d50;--modeline:#121829;--h1:#5ec2ff;--h2:#ff93dd;--h3:#e4d1fb;--h4:#51e1f0;--org-todo:#5be295;--org-date:#fbea83;--wk-key:#5be295;--wk-grp:#e4d1fb;--wk-cmd:#5ec2ff;--magit-heading:#5ec2ff;--magit-branch:#51e1f0;--orderless:#93d0f9;--orderless-bg:#22324a;--pink:#ff93dd;--crust:#0f1425;--mantle:#141b2e;--base:#1b2236;--surface0:#20273c;--surface1:#252d45;--surface2:#767f9c;--overlay0:#767f9c;--overlay1:#92a3d4;--overlay2:#a1adcf;--subtext0:#b9c0d5;--subtext1:#b9c0d5;--text:#e3e6ef">
+  <header><b class="num">1</b><div><h2>Current</h2><small>bg #1b2236 · fg #e3e6ef</small></div></header>
+  <div class="stats"><span><i style="background:#5ec2ff"></i>keyword 62</span> · <span><i style="background:#ff93dd"></i>function 61</span> · <span><i style="background:#5be295"></i>string 72</span> · <span><i style="background:#fbea83"></i>type 91</span> · <span><i style="background:#fc9341"></i>number 56</span> · <span><i style="background:#e4d1fb"></i>constant 81</span> · <span><i style="background:#ffbeeb"></i>param 77</span> · <span><i style="background:#92a3d4"></i>comment 50</span> · <span><i style="background:#e3e6ef"></i>fg 89</span> · <b>color-blind check: close: string/keyword 0.056</b></div>
+  <pre><span class="c"># Reading test: a real-sized chunk, read it for a minute</span>
+<span class="k">from</span> pathlib <span class="k">import</span> Path
+<span class="k">import</span> tomllib
+
+<span class="cn">FLOORS</span> <span class="o">=</span> <span class="o">{</span><span class="s">"code"</span><span class="o">:</span> <span class="n">60</span><span class="o">,</span> <span class="s">"comment"</span><span class="o">:</span> <span class="n">45</span><span class="o">,</span> <span class="s">"linenr"</span><span class="o">:</span> <span class="n">30</span><span class="o">}</span>
+
+
+<span class="k">class</span> <span class="t">Palette</span><span class="o">:</span>
+    <span class="d">"""Load palette.toml and resolve every doom slot to a hex color.
+
+    Slots may reference colors by name or through doom's helpers,
+    for example "lighten:magenta:0.4" or "blend:magenta:bg:0.22".
+    """</span>
+
+    <span class="k">def</span> <span class="f">__init__</span><span class="o">(</span><span class="b">self</span><span class="o">,</span> <span class="p">path</span><span class="o">:</span> <span class="t">Path</span><span class="o">,</span> <span class="p">variant</span><span class="o">:</span> <span class="t">str</span> <span class="o">=</span> <span class="s">"dark"</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="cn">None</span><span class="o">:</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">raw</span> <span class="o">=</span> tomllib<span class="o">.</span><span class="fc">loads</span><span class="o">(</span>path<span class="o">.</span><span class="fc">read_text</span><span class="o">())[</span>variant<span class="o">]</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">:</span> <span class="t">dict</span><span class="o">[</span><span class="t">str</span><span class="o">,</span> <span class="t">str</span><span class="o">]</span> <span class="o">=</span> <span class="o">{}</span>
+
+    <span class="k">def</span> <span class="f">get</span><span class="o">(</span><span class="b">self</span><span class="o">,</span> <span class="p">slot</span><span class="o">:</span> <span class="t">str</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="t">str</span><span class="o">:</span>
+        <span class="k">if</span> slot <span class="k">in</span> <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">:</span>
+            <span class="k">return</span> <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">[</span>slot<span class="o">]</span>
+        <span class="c"># unknown slots fall back to the foreground, like doom does</span>
+        expr <span class="o">=</span> <span class="b">self</span><span class="o">.</span><span class="v">raw</span><span class="o">[</span><span class="s">"slots"</span><span class="o">].</span><span class="fc">get</span><span class="o">(</span>slot<span class="o">,</span> <span class="s">"fg"</span><span class="o">)</span>
+        kind<span class="o">,</span> <span class="o">*</span>args <span class="o">=</span> expr<span class="o">.</span><span class="fc">split</span><span class="o">(</span><span class="s">":"</span><span class="o">)</span>
+        <span class="k">match</span> kind<span class="o">:</span>
+            <span class="k">case</span> <span class="s">"lighten"</span><span class="o">:</span>
+                value <span class="o">=</span> <span class="fc">lighten</span><span class="o">(</span><span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>args<span class="o">[</span><span class="n">0</span><span class="o">]),</span> <span class="b">float</span><span class="o">(</span>args<span class="o">[</span><span class="n">1</span><span class="o">]))</span>
+            <span class="k">case</span> <span class="s">"blend"</span><span class="o">:</span>
+                a<span class="o">,</span> b<span class="o">,</span> t <span class="o">=</span> args
+                value <span class="o">=</span> <span class="fc">blend</span><span class="o">(</span><span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>a<span class="o">),</span> <span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>b<span class="o">),</span> <span class="b">float</span><span class="o">(</span>t<span class="o">))</span>
+            <span class="k">case</span> _<span class="o">:</span>
+                value <span class="o">=</span> <span class="b">self</span><span class="o">.</span><span class="v">raw</span><span class="o">[</span><span class="s">"colors"</span><span class="o">][</span>kind<span class="o">]</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">[</span>slot<span class="o">]</span> <span class="o">=</span> value
+        <span class="k">return</span> value
+
+
+<span class="k">def</span> <span class="f">report</span><span class="o">(</span><span class="p">pal</span><span class="o">:</span> <span class="t">Palette</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="cn">None</span><span class="o">:</span>
+    <span class="k">for</span> role<span class="o">,</span> floor <span class="k">in</span> <span class="cn">FLOORS</span><span class="o">.</span><span class="fc">items</span><span class="o">():</span>
+        lc <span class="o">=</span> <span class="fc">apca</span><span class="o">(</span>pal<span class="o">.</span><span class="fc">get</span><span class="o">(</span>role<span class="o">),</span> pal<span class="o">.</span><span class="fc">get</span><span class="o">(</span><span class="s">"bg"</span><span class="o">))</span>
+        <span class="b">print</span><span class="o">(</span><span class="s">f"</span><span class="o">{</span>role<span class="o">:&lt;10}</span><span class="s"> Lc </span><span class="o">{</span>lc<span class="o">:5.1f}</span><span class="s"> </span><span class="o">{</span><span class="s">'ok'</span> <span class="k">if</span> lc <span class="o">&gt;=</span> floor <span class="k">else</span> <span class="s">'LOW'</span><span class="o">}</span><span class="e">\n</span><span class="s">"</span><span class="o">)</span>
+</pre>
+</article>
+<article class="cand" style="--keyword:#ced7f3;--function:#ff93dd;--fcall:#f7ace2;--string:#5be295;--type:#7dbcb3;--number:#fc9341;--constant:#cc94ff;--builtin:#ff93dd;--param:#ffbeeb;--varuse:#f1d2ed;--comment:#92a3d4;--doc:#adbadf;--operator:#ced7f3;--punct:#dee2f0;--property:#d6ddf1;--escape:#ced7f3;--bg:#1b2236;--bg-alt:#141b2e;--bg-deep:#0f1425;--fg:#e3e6ef;--fg-dim:#b9c0d5;--hl-line:#141b2e;--surface:#252d45;--border:#252d45;--linenr:#767f9c;--linenr-cur:#ff93dd;--cursor:#ff93dd;--link:#ff93dd;--region:#4d3b5b;--search:#5e5e4d;--error:#ff7d7d;--warning:#fbea83;--success:#5be295;--info:#51e1f0;--added:#5be295;--deleted:#ff7d7d;--modified:#fc9341;--added-bg:#284849;--deleted-bg:#513d50;--modeline:#121829;--h1:#ced7f3;--h2:#ff93dd;--h3:#cc94ff;--h4:#51e1f0;--org-todo:#5be295;--org-date:#fbea83;--wk-key:#5be295;--wk-grp:#cc94ff;--wk-cmd:#ced7f3;--magit-heading:#ced7f3;--magit-branch:#51e1f0;--orderless:#d6ddf1;--orderless-bg:#2d3449;--pink:#ff93dd;--crust:#0f1425;--mantle:#141b2e;--base:#1b2236;--surface0:#20273c;--surface1:#252d45;--surface2:#767f9c;--overlay0:#767f9c;--overlay1:#92a3d4;--overlay2:#a1adcf;--subtext0:#b9c0d5;--subtext1:#b9c0d5;--text:#e3e6ef">
+  <header><b class="num">2</b><div><h2>Icy periwinkle keywords · sea-green types</h2><small>bg #1b2236 · fg #e3e6ef</small></div></header>
+  <div class="stats"><span><i style="background:#ced7f3"></i>keyword 80</span> · <span><i style="background:#ff93dd"></i>function 61</span> · <span><i style="background:#5be295"></i>string 72</span> · <span><i style="background:#7dbcb3"></i>type 57</span> · <span><i style="background:#fc9341"></i>number 56</span> · <span><i style="background:#cc94ff"></i>constant 55</span> · <span><i style="background:#ffbeeb"></i>param 77</span> · <span><i style="background:#92a3d4"></i>comment 50</span> · <span><i style="background:#e3e6ef"></i>fg 89</span> · <b>color-blind check: all pairs clear</b></div>
+  <pre><span class="c"># Reading test: a real-sized chunk, read it for a minute</span>
+<span class="k">from</span> pathlib <span class="k">import</span> Path
+<span class="k">import</span> tomllib
+
+<span class="cn">FLOORS</span> <span class="o">=</span> <span class="o">{</span><span class="s">"code"</span><span class="o">:</span> <span class="n">60</span><span class="o">,</span> <span class="s">"comment"</span><span class="o">:</span> <span class="n">45</span><span class="o">,</span> <span class="s">"linenr"</span><span class="o">:</span> <span class="n">30</span><span class="o">}</span>
+
+
+<span class="k">class</span> <span class="t">Palette</span><span class="o">:</span>
+    <span class="d">"""Load palette.toml and resolve every doom slot to a hex color.
+
+    Slots may reference colors by name or through doom's helpers,
+    for example "lighten:magenta:0.4" or "blend:magenta:bg:0.22".
+    """</span>
+
+    <span class="k">def</span> <span class="f">__init__</span><span class="o">(</span><span class="b">self</span><span class="o">,</span> <span class="p">path</span><span class="o">:</span> <span class="t">Path</span><span class="o">,</span> <span class="p">variant</span><span class="o">:</span> <span class="t">str</span> <span class="o">=</span> <span class="s">"dark"</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="cn">None</span><span class="o">:</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">raw</span> <span class="o">=</span> tomllib<span class="o">.</span><span class="fc">loads</span><span class="o">(</span>path<span class="o">.</span><span class="fc">read_text</span><span class="o">())[</span>variant<span class="o">]</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">:</span> <span class="t">dict</span><span class="o">[</span><span class="t">str</span><span class="o">,</span> <span class="t">str</span><span class="o">]</span> <span class="o">=</span> <span class="o">{}</span>
+
+    <span class="k">def</span> <span class="f">get</span><span class="o">(</span><span class="b">self</span><span class="o">,</span> <span class="p">slot</span><span class="o">:</span> <span class="t">str</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="t">str</span><span class="o">:</span>
+        <span class="k">if</span> slot <span class="k">in</span> <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">:</span>
+            <span class="k">return</span> <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">[</span>slot<span class="o">]</span>
+        <span class="c"># unknown slots fall back to the foreground, like doom does</span>
+        expr <span class="o">=</span> <span class="b">self</span><span class="o">.</span><span class="v">raw</span><span class="o">[</span><span class="s">"slots"</span><span class="o">].</span><span class="fc">get</span><span class="o">(</span>slot<span class="o">,</span> <span class="s">"fg"</span><span class="o">)</span>
+        kind<span class="o">,</span> <span class="o">*</span>args <span class="o">=</span> expr<span class="o">.</span><span class="fc">split</span><span class="o">(</span><span class="s">":"</span><span class="o">)</span>
+        <span class="k">match</span> kind<span class="o">:</span>
+            <span class="k">case</span> <span class="s">"lighten"</span><span class="o">:</span>
+                value <span class="o">=</span> <span class="fc">lighten</span><span class="o">(</span><span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>args<span class="o">[</span><span class="n">0</span><span class="o">]),</span> <span class="b">float</span><span class="o">(</span>args<span class="o">[</span><span class="n">1</span><span class="o">]))</span>
+            <span class="k">case</span> <span class="s">"blend"</span><span class="o">:</span>
+                a<span class="o">,</span> b<span class="o">,</span> t <span class="o">=</span> args
+                value <span class="o">=</span> <span class="fc">blend</span><span class="o">(</span><span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>a<span class="o">),</span> <span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>b<span class="o">),</span> <span class="b">float</span><span class="o">(</span>t<span class="o">))</span>
+            <span class="k">case</span> _<span class="o">:</span>
+                value <span class="o">=</span> <span class="b">self</span><span class="o">.</span><span class="v">raw</span><span class="o">[</span><span class="s">"colors"</span><span class="o">][</span>kind<span class="o">]</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">[</span>slot<span class="o">]</span> <span class="o">=</span> value
+        <span class="k">return</span> value
+
+
+<span class="k">def</span> <span class="f">report</span><span class="o">(</span><span class="p">pal</span><span class="o">:</span> <span class="t">Palette</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="cn">None</span><span class="o">:</span>
+    <span class="k">for</span> role<span class="o">,</span> floor <span class="k">in</span> <span class="cn">FLOORS</span><span class="o">.</span><span class="fc">items</span><span class="o">():</span>
+        lc <span class="o">=</span> <span class="fc">apca</span><span class="o">(</span>pal<span class="o">.</span><span class="fc">get</span><span class="o">(</span>role<span class="o">),</span> pal<span class="o">.</span><span class="fc">get</span><span class="o">(</span><span class="s">"bg"</span><span class="o">))</span>
+        <span class="b">print</span><span class="o">(</span><span class="s">f"</span><span class="o">{</span>role<span class="o">:&lt;10}</span><span class="s"> Lc </span><span class="o">{</span>lc<span class="o">:5.1f}</span><span class="s"> </span><span class="o">{</span><span class="s">'ok'</span> <span class="k">if</span> lc <span class="o">&gt;=</span> floor <span class="k">else</span> <span class="s">'LOW'</span><span class="o">}</span><span class="e">\n</span><span class="s">"</span><span class="o">)</span>
+</pre>
+</article>
+<article class="cand" style="--keyword:#c7daeb;--function:#ff93dd;--fcall:#f7ace2;--string:#5be295;--type:#7dbcb3;--number:#fc9341;--constant:#cc94ff;--builtin:#ff93dd;--param:#ffbeeb;--varuse:#f1d2ed;--comment:#92a3d4;--doc:#adbadf;--operator:#c7daeb;--punct:#dce3ee;--property:#d2dfed;--escape:#c7daeb;--bg:#1b2236;--bg-alt:#141b2e;--bg-deep:#0f1425;--fg:#e3e6ef;--fg-dim:#b9c0d5;--hl-line:#141b2e;--surface:#252d45;--border:#252d45;--linenr:#767f9c;--linenr-cur:#ff93dd;--cursor:#ff93dd;--link:#ff93dd;--region:#4d3b5b;--search:#5e5e4d;--error:#ff7d7d;--warning:#fbea83;--success:#5be295;--info:#51e1f0;--added:#5be295;--deleted:#ff7d7d;--modified:#fc9341;--added-bg:#284849;--deleted-bg:#513d50;--modeline:#121829;--h1:#c7daeb;--h2:#ff93dd;--h3:#cc94ff;--h4:#51e1f0;--org-todo:#5be295;--org-date:#fbea83;--wk-key:#5be295;--wk-grp:#cc94ff;--wk-cmd:#c7daeb;--magit-heading:#c7daeb;--magit-branch:#51e1f0;--orderless:#d2dfed;--orderless-bg:#2c3448;--pink:#ff93dd;--crust:#0f1425;--mantle:#141b2e;--base:#1b2236;--surface0:#20273c;--surface1:#252d45;--surface2:#767f9c;--overlay0:#767f9c;--overlay1:#92a3d4;--overlay2:#a1adcf;--subtext0:#b9c0d5;--subtext1:#b9c0d5;--text:#e3e6ef">
+  <header><b class="num">3</b><div><h2>Icy steel keywords · sea-green types</h2><small>bg #1b2236 · fg #e3e6ef</small></div></header>
+  <div class="stats"><span><i style="background:#c7daeb"></i>keyword 80</span> · <span><i style="background:#ff93dd"></i>function 61</span> · <span><i style="background:#5be295"></i>string 72</span> · <span><i style="background:#7dbcb3"></i>type 57</span> · <span><i style="background:#fc9341"></i>number 56</span> · <span><i style="background:#cc94ff"></i>constant 55</span> · <span><i style="background:#ffbeeb"></i>param 77</span> · <span><i style="background:#92a3d4"></i>comment 50</span> · <span><i style="background:#e3e6ef"></i>fg 89</span> · <b>color-blind check: all pairs clear</b></div>
+  <pre><span class="c"># Reading test: a real-sized chunk, read it for a minute</span>
+<span class="k">from</span> pathlib <span class="k">import</span> Path
+<span class="k">import</span> tomllib
+
+<span class="cn">FLOORS</span> <span class="o">=</span> <span class="o">{</span><span class="s">"code"</span><span class="o">:</span> <span class="n">60</span><span class="o">,</span> <span class="s">"comment"</span><span class="o">:</span> <span class="n">45</span><span class="o">,</span> <span class="s">"linenr"</span><span class="o">:</span> <span class="n">30</span><span class="o">}</span>
+
+
+<span class="k">class</span> <span class="t">Palette</span><span class="o">:</span>
+    <span class="d">"""Load palette.toml and resolve every doom slot to a hex color.
+
+    Slots may reference colors by name or through doom's helpers,
+    for example "lighten:magenta:0.4" or "blend:magenta:bg:0.22".
+    """</span>
+
+    <span class="k">def</span> <span class="f">__init__</span><span class="o">(</span><span class="b">self</span><span class="o">,</span> <span class="p">path</span><span class="o">:</span> <span class="t">Path</span><span class="o">,</span> <span class="p">variant</span><span class="o">:</span> <span class="t">str</span> <span class="o">=</span> <span class="s">"dark"</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="cn">None</span><span class="o">:</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">raw</span> <span class="o">=</span> tomllib<span class="o">.</span><span class="fc">loads</span><span class="o">(</span>path<span class="o">.</span><span class="fc">read_text</span><span class="o">())[</span>variant<span class="o">]</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">:</span> <span class="t">dict</span><span class="o">[</span><span class="t">str</span><span class="o">,</span> <span class="t">str</span><span class="o">]</span> <span class="o">=</span> <span class="o">{}</span>
+
+    <span class="k">def</span> <span class="f">get</span><span class="o">(</span><span class="b">self</span><span class="o">,</span> <span class="p">slot</span><span class="o">:</span> <span class="t">str</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="t">str</span><span class="o">:</span>
+        <span class="k">if</span> slot <span class="k">in</span> <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">:</span>
+            <span class="k">return</span> <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">[</span>slot<span class="o">]</span>
+        <span class="c"># unknown slots fall back to the foreground, like doom does</span>
+        expr <span class="o">=</span> <span class="b">self</span><span class="o">.</span><span class="v">raw</span><span class="o">[</span><span class="s">"slots"</span><span class="o">].</span><span class="fc">get</span><span class="o">(</span>slot<span class="o">,</span> <span class="s">"fg"</span><span class="o">)</span>
+        kind<span class="o">,</span> <span class="o">*</span>args <span class="o">=</span> expr<span class="o">.</span><span class="fc">split</span><span class="o">(</span><span class="s">":"</span><span class="o">)</span>
+        <span class="k">match</span> kind<span class="o">:</span>
+            <span class="k">case</span> <span class="s">"lighten"</span><span class="o">:</span>
+                value <span class="o">=</span> <span class="fc">lighten</span><span class="o">(</span><span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>args<span class="o">[</span><span class="n">0</span><span class="o">]),</span> <span class="b">float</span><span class="o">(</span>args<span class="o">[</span><span class="n">1</span><span class="o">]))</span>
+            <span class="k">case</span> <span class="s">"blend"</span><span class="o">:</span>
+                a<span class="o">,</span> b<span class="o">,</span> t <span class="o">=</span> args
+                value <span class="o">=</span> <span class="fc">blend</span><span class="o">(</span><span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>a<span class="o">),</span> <span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>b<span class="o">),</span> <span class="b">float</span><span class="o">(</span>t<span class="o">))</span>
+            <span class="k">case</span> _<span class="o">:</span>
+                value <span class="o">=</span> <span class="b">self</span><span class="o">.</span><span class="v">raw</span><span class="o">[</span><span class="s">"colors"</span><span class="o">][</span>kind<span class="o">]</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">[</span>slot<span class="o">]</span> <span class="o">=</span> value
+        <span class="k">return</span> value
+
+
+<span class="k">def</span> <span class="f">report</span><span class="o">(</span><span class="p">pal</span><span class="o">:</span> <span class="t">Palette</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="cn">None</span><span class="o">:</span>
+    <span class="k">for</span> role<span class="o">,</span> floor <span class="k">in</span> <span class="cn">FLOORS</span><span class="o">.</span><span class="fc">items</span><span class="o">():</span>
+        lc <span class="o">=</span> <span class="fc">apca</span><span class="o">(</span>pal<span class="o">.</span><span class="fc">get</span><span class="o">(</span>role<span class="o">),</span> pal<span class="o">.</span><span class="fc">get</span><span class="o">(</span><span class="s">"bg"</span><span class="o">))</span>
+        <span class="b">print</span><span class="o">(</span><span class="s">f"</span><span class="o">{</span>role<span class="o">:&lt;10}</span><span class="s"> Lc </span><span class="o">{</span>lc<span class="o">:5.1f}</span><span class="s"> </span><span class="o">{</span><span class="s">'ok'</span> <span class="k">if</span> lc <span class="o">&gt;=</span> floor <span class="k">else</span> <span class="s">'LOW'</span><span class="o">}</span><span class="e">\n</span><span class="s">"</span><span class="o">)</span>
+</pre>
+</article>
+<article class="cand" style="--keyword:#c2d5f7;--function:#ff93dd;--fcall:#f7ace2;--string:#5be295;--type:#7dbcb3;--number:#fc9341;--constant:#cc94ff;--builtin:#ff93dd;--param:#ffbeeb;--varuse:#f1d2ed;--comment:#92a3d4;--doc:#adbadf;--operator:#c2d5f7;--punct:#dbe2f1;--property:#cfdcf4;--escape:#c2d5f7;--bg:#1b2236;--bg-alt:#141b2e;--bg-deep:#0f1425;--fg:#e3e6ef;--fg-dim:#b9c0d5;--hl-line:#141b2e;--surface:#252d45;--border:#252d45;--linenr:#767f9c;--linenr-cur:#ff93dd;--cursor:#ff93dd;--link:#ff93dd;--region:#4d3b5b;--search:#5e5e4d;--error:#ff7d7d;--warning:#fbea83;--success:#5be295;--info:#51e1f0;--added:#5be295;--deleted:#ff7d7d;--modified:#fc9341;--added-bg:#284849;--deleted-bg:#513d50;--modeline:#121829;--h1:#c2d5f7;--h2:#ff93dd;--h3:#cc94ff;--h4:#51e1f0;--org-todo:#5be295;--org-date:#fbea83;--wk-key:#5be295;--wk-grp:#cc94ff;--wk-cmd:#c2d5f7;--magit-heading:#c2d5f7;--magit-branch:#51e1f0;--orderless:#cfdcf4;--orderless-bg:#2c3449;--pink:#ff93dd;--crust:#0f1425;--mantle:#141b2e;--base:#1b2236;--surface0:#20273c;--surface1:#252d45;--surface2:#767f9c;--overlay0:#767f9c;--overlay1:#92a3d4;--overlay2:#a1adcf;--subtext0:#b9c0d5;--subtext1:#b9c0d5;--text:#e3e6ef">
+  <header><b class="num">4</b><div><h2>Icy cornflower keywords · sea-green types</h2><small>bg #1b2236 · fg #e3e6ef</small></div></header>
+  <div class="stats"><span><i style="background:#c2d5f7"></i>keyword 78</span> · <span><i style="background:#ff93dd"></i>function 61</span> · <span><i style="background:#5be295"></i>string 72</span> · <span><i style="background:#7dbcb3"></i>type 57</span> · <span><i style="background:#fc9341"></i>number 56</span> · <span><i style="background:#cc94ff"></i>constant 55</span> · <span><i style="background:#ffbeeb"></i>param 77</span> · <span><i style="background:#92a3d4"></i>comment 50</span> · <span><i style="background:#e3e6ef"></i>fg 89</span> · <b>color-blind check: all pairs clear</b></div>
+  <pre><span class="c"># Reading test: a real-sized chunk, read it for a minute</span>
+<span class="k">from</span> pathlib <span class="k">import</span> Path
+<span class="k">import</span> tomllib
+
+<span class="cn">FLOORS</span> <span class="o">=</span> <span class="o">{</span><span class="s">"code"</span><span class="o">:</span> <span class="n">60</span><span class="o">,</span> <span class="s">"comment"</span><span class="o">:</span> <span class="n">45</span><span class="o">,</span> <span class="s">"linenr"</span><span class="o">:</span> <span class="n">30</span><span class="o">}</span>
+
+
+<span class="k">class</span> <span class="t">Palette</span><span class="o">:</span>
+    <span class="d">"""Load palette.toml and resolve every doom slot to a hex color.
+
+    Slots may reference colors by name or through doom's helpers,
+    for example "lighten:magenta:0.4" or "blend:magenta:bg:0.22".
+    """</span>
+
+    <span class="k">def</span> <span class="f">__init__</span><span class="o">(</span><span class="b">self</span><span class="o">,</span> <span class="p">path</span><span class="o">:</span> <span class="t">Path</span><span class="o">,</span> <span class="p">variant</span><span class="o">:</span> <span class="t">str</span> <span class="o">=</span> <span class="s">"dark"</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="cn">None</span><span class="o">:</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">raw</span> <span class="o">=</span> tomllib<span class="o">.</span><span class="fc">loads</span><span class="o">(</span>path<span class="o">.</span><span class="fc">read_text</span><span class="o">())[</span>variant<span class="o">]</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">:</span> <span class="t">dict</span><span class="o">[</span><span class="t">str</span><span class="o">,</span> <span class="t">str</span><span class="o">]</span> <span class="o">=</span> <span class="o">{}</span>
+
+    <span class="k">def</span> <span class="f">get</span><span class="o">(</span><span class="b">self</span><span class="o">,</span> <span class="p">slot</span><span class="o">:</span> <span class="t">str</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="t">str</span><span class="o">:</span>
+        <span class="k">if</span> slot <span class="k">in</span> <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">:</span>
+            <span class="k">return</span> <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">[</span>slot<span class="o">]</span>
+        <span class="c"># unknown slots fall back to the foreground, like doom does</span>
+        expr <span class="o">=</span> <span class="b">self</span><span class="o">.</span><span class="v">raw</span><span class="o">[</span><span class="s">"slots"</span><span class="o">].</span><span class="fc">get</span><span class="o">(</span>slot<span class="o">,</span> <span class="s">"fg"</span><span class="o">)</span>
+        kind<span class="o">,</span> <span class="o">*</span>args <span class="o">=</span> expr<span class="o">.</span><span class="fc">split</span><span class="o">(</span><span class="s">":"</span><span class="o">)</span>
+        <span class="k">match</span> kind<span class="o">:</span>
+            <span class="k">case</span> <span class="s">"lighten"</span><span class="o">:</span>
+                value <span class="o">=</span> <span class="fc">lighten</span><span class="o">(</span><span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>args<span class="o">[</span><span class="n">0</span><span class="o">]),</span> <span class="b">float</span><span class="o">(</span>args<span class="o">[</span><span class="n">1</span><span class="o">]))</span>
+            <span class="k">case</span> <span class="s">"blend"</span><span class="o">:</span>
+                a<span class="o">,</span> b<span class="o">,</span> t <span class="o">=</span> args
+                value <span class="o">=</span> <span class="fc">blend</span><span class="o">(</span><span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>a<span class="o">),</span> <span class="b">self</span><span class="o">.</span><span class="fc">get</span><span class="o">(</span>b<span class="o">),</span> <span class="b">float</span><span class="o">(</span>t<span class="o">))</span>
+            <span class="k">case</span> _<span class="o">:</span>
+                value <span class="o">=</span> <span class="b">self</span><span class="o">.</span><span class="v">raw</span><span class="o">[</span><span class="s">"colors"</span><span class="o">][</span>kind<span class="o">]</span>
+        <span class="b">self</span><span class="o">.</span><span class="v">cache</span><span class="o">[</span>slot<span class="o">]</span> <span class="o">=</span> value
+        <span class="k">return</span> value
+
+
+<span class="k">def</span> <span class="f">report</span><span class="o">(</span><span class="p">pal</span><span class="o">:</span> <span class="t">Palette</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="cn">None</span><span class="o">:</span>
+    <span class="k">for</span> role<span class="o">,</span> floor <span class="k">in</span> <span class="cn">FLOORS</span><span class="o">.</span><span class="fc">items</span><span class="o">():</span>
+        lc <span class="o">=</span> <span class="fc">apca</span><span class="o">(</span>pal<span class="o">.</span><span class="fc">get</span><span class="o">(</span>role<span class="o">),</span> pal<span class="o">.</span><span class="fc">get</span><span class="o">(</span><span class="s">"bg"</span><span class="o">))</span>
+        <span class="b">print</span><span class="o">(</span><span class="s">f"</span><span class="o">{</span>role<span class="o">:&lt;10}</span><span class="s"> Lc </span><span class="o">{</span>lc<span class="o">:5.1f}</span><span class="s"> </span><span class="o">{</span><span class="s">'ok'</span> <span class="k">if</span> lc <span class="o">&gt;=</span> floor <span class="k">else</span> <span class="s">'LOW'</span><span class="o">}</span><span class="e">\n</span><span class="s">"</span><span class="o">)</span>
+</pre>
+</article>
+  </div>
+</div>
