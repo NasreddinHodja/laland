@@ -1,0 +1,34 @@
+#+TITLE: laland
+#+DESCRIPTION: A pink dark color theme for Doom Emacs, Neovim, kitty, bat, KDE and Firefox
+#+OPTIONS: ^:{}
+
+Pink on midnight blue. 
+
+Inspired by the book [[https://grupoeditorialglobal.com.br/catalogos/livro/?id=2184][Lalande by Flavio Carneiro]]
+
+* Build
+
+=palette.toml= is the only source. Colors are OKLCH; syntax roles are doom-themes slots.
+
+#+begin_src sh
+python3 build.py   # writes dist/
+#+end_src
+
+* Install
+
+#+begin_src sh
+./install.sh   # copies dist/ into place, reloads kitty, bat, KDE and the Plasma style
+#+end_src
+
+Then, once:
+
+| App      | Do                                                                                                                                |
+|----------+-----------------------------------------------------------------------------------------------------------------------------------|
+| Emacs    | =~/.config/emacs/themes= on =custom-theme-load-path=, =(setopt doom-theme 'doom-laland)=                                          |
+| Neovim   | =colorscheme laland=                                                                                                              |
+| kitty    | =include laland-dark.conf= in =kitty.conf=                                                                                        |
+| bat      | =--theme=laland= in the bat config                                                                                                |
+| KDE      | Colors: laland dark. GTK follows it                                                                                               |
+| Plasma   | Plasma style: laland. Needs Klassy                                                                                                |
+| Firefox  | =dist/firefox/laland-{colors,content}.css= into the profile's =chrome/=, =@import= them from =userChrome.css= / =userContent.css= |
+| Sidebery | paste =dist/firefox/laland-sidebery.css= in Settings, Styles editor                                                               |

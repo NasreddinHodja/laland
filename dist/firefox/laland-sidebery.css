@@ -23,30 +23,6 @@
     --s-accent: #ff93dd;
 }
 
-@media (prefers-color-scheme: light) {
-  #root.root {
-    --frame-bg: #e9edf5;
-    --frame-fg: #222633;
-    --toolbar-bg: #f5f7fc;
-    --toolbar-fg: #222633;
-    --popup-bg: #f5f7fc;
-    --popup-fg: #222633;
-    --ctx-menu-bg: #f5f7fc;
-    --ctx-menu-fg: #222633;
-    --active-el-bg: #ecd7ec;
-    --active-el-fg: #222633;
-    --tabs-normal-fg: #3c4253;
-    --tabs-activated-bg: transparent;
-    --tabs-activated-fg: #222633;
-    --tabs-activated-shadow: inset 0 0 0 2px #bd2f9a;
-    --frame-el-overlay-selected-bg: #ecd7ec;
-    --tabs-progress-bg: #bd2f9a;
-    --badge-bg: #bd2f9a;
-    --badge-fg: #f5f7fc;
-    --s-accent: #bd2f9a;
-  }
-}
-
 /* Container mark (.ctx, a 2px bar at right:0 inside the tab body in Sidebery 5.6.1) moved outside:
    the body is 6px narrower, so the title is clipped inside the pink border, and the bar sits in the
    freed space with a 4px gap: [tab----] | */
