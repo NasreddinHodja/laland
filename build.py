@@ -468,6 +468,124 @@ def kde_colors(vname, e):
             f"inactiveBlend={rgb(e['base5'])}", f"inactiveForeground={rgb(e['base5'])}", ""]
     return "\n".join(out)
 
+# ── neovim ───────────────────────────────────────────────────────────────
+# Native colorscheme (no plugin). Treesitter captures get the same roles as the Emacs theme, using
+# the doom-derived colors from faces() (function calls 70% functions, punctuation 25% operators...).
+
+def nvim_colors(vname, e, f):
+    name = "laland" if vname == "dark" else "laland-light"
+    bright = (lambda c: lighten(c, 0.15)) if vname == "dark" else (lambda c: darken(c, 0.15))
+    black, white = (e["base3"], e["base7"]) if vname == "dark" else (e["base8"], e["base5"])
+    ansi = [black, e["red"], e["green"], e["yellow"], e["blue"], e["magenta"], e["cyan"], white]
+    ansi += [e["base5"]] + [bright(c) for c in ansi[1:7]] + [e["fg"] if vname == "dark" else e["base4"]]
+    g = {
+        # editor
+        "Normal": dict(fg=f["fg"], bg=e["bg"]), "NormalFloat": dict(fg=f["fg"], bg=e["bg-alt"]),
+        "FloatBorder": dict(fg=e["highlight"], bg=e["bg-alt"]), "ColorColumn": dict(bg=e["bg-alt"]),
+        "CursorLine": dict(bg=e["bg-alt"]), "CursorColumn": dict(bg=e["bg-alt"]), "Cursor": dict(fg=e["bg"], bg=e["highlight"]),
+        "LineNr": dict(fg=f["linenr"]), "CursorLineNr": dict(fg=e["highlight"], bold=True),
+        "SignColumn": dict(bg=e["bg"]), "FoldColumn": dict(fg=f["linenr"]), "Folded": dict(fg=f["comment"], bg=e["bg-alt"]),
+        "Visual": dict(bg=e["region"]), "Search": dict(fg=e["bg"], bg=e["yellow"]), "IncSearch": dict(fg=e["bg"], bg=e["highlight"]),
+        "CurSearch": dict(fg=e["bg"], bg=e["highlight"]), "MatchParen": dict(fg=e["highlight"], bold=True, underline=True),
+        "Pmenu": dict(fg=f["fg"], bg=e["bg-alt"]), "PmenuSel": dict(fg=e["bg"], bg=e["highlight"]),
+        "PmenuSbar": dict(bg=e["bg-alt"]), "PmenuThumb": dict(bg=e["base4"]),
+        "StatusLine": dict(fg=f["fg"], bg=e["modeline-bg"]), "StatusLineNC": dict(fg=e["base5"], bg=e["modeline-bg-inactive"]),
+        "WinSeparator": dict(fg=e["base3"]), "VertSplit": dict(fg=e["base3"]), "TabLine": dict(fg=e["base5"], bg=e["bg-alt"]),
+        "TabLineSel": dict(fg=f["fg"], bg=e["bg"]), "TabLineFill": dict(bg=e["bg-alt"]), "Title": dict(fg=e["highlight"], bold=True),
+        "NonText": dict(fg=e["base4"]), "Whitespace": dict(fg=e["base3"]), "EndOfBuffer": dict(fg=e["bg"]),
+        "Directory": dict(fg=e["blue"]), "Question": dict(fg=e["green"]), "MoreMsg": dict(fg=e["green"]),
+        "ErrorMsg": dict(fg=e["error"]), "WarningMsg": dict(fg=e["warning"]), "ModeMsg": dict(fg=f["fg"], bold=True),
+        "SpellBad": dict(sp=e["error"], undercurl=True), "SpellCap": dict(sp=e["warning"], undercurl=True),
+        "DiffAdd": dict(bg=f["added-bg"]), "DiffDelete": dict(fg=e["vc-deleted"], bg=f["deleted-bg"]),
+        "DiffChange": dict(bg=blend(e["vc-modified"], e["bg"], 0.15)), "DiffText": dict(bg=blend(e["vc-modified"], e["bg"], 0.3)),
+        "DiagnosticError": dict(fg=e["error"]), "DiagnosticWarn": dict(fg=e["warning"]),
+        "DiagnosticInfo": dict(fg=e["cyan"]), "DiagnosticHint": dict(fg=f["comment"]),
+        "DiagnosticUnderlineError": dict(sp=e["error"], undercurl=True), "DiagnosticUnderlineWarn": dict(sp=e["warning"], undercurl=True),
+        "DiagnosticUnderlineInfo": dict(sp=e["cyan"], undercurl=True), "DiagnosticUnderlineHint": dict(sp=f["comment"], undercurl=True),
+        # syntax, legacy groups
+        "Comment": dict(fg=f["comment"], italic=True), "Constant": dict(fg=f["constant"]), "String": dict(fg=f["string"]),
+        "Character": dict(fg=f["string"]), "Number": dict(fg=f["number"]), "Boolean": dict(fg=f["constant"]),
+        "Float": dict(fg=f["number"]), "Identifier": dict(fg=f["param"]), "Function": dict(fg=f["function"]),
+        "Statement": dict(fg=f["keyword"]), "Keyword": dict(fg=f["keyword"]), "Conditional": dict(fg=f["keyword"]),
+        "Repeat": dict(fg=f["keyword"]), "Label": dict(fg=f["keyword"]), "Exception": dict(fg=f["keyword"]),
+        "Operator": dict(fg=f["operator"]), "PreProc": dict(fg=f["keyword"]), "Include": dict(fg=f["keyword"]),
+        "Type": dict(fg=f["type"]), "StorageClass": dict(fg=f["keyword"]), "Structure": dict(fg=f["type"]),
+        "Special": dict(fg=f["builtin"]), "SpecialChar": dict(fg=f["escape"]), "Delimiter": dict(fg=f["punct"]),
+        "Tag": dict(fg=f["keyword"]), "Todo": dict(fg=e["bg"], bg=e["warning"], bold=True), "Error": dict(fg=e["error"]),
+        "Underlined": dict(underline=True),
+        # treesitter
+        "@comment": dict(link="Comment"), "@keyword": dict(fg=f["keyword"]), "@keyword.function": dict(fg=f["keyword"]),
+        "@keyword.return": dict(fg=f["keyword"]), "@keyword.operator": dict(fg=f["keyword"]),
+        "@function": dict(fg=f["function"]), "@function.call": dict(fg=f["fcall"], italic=True),
+        "@function.method": dict(fg=f["function"]), "@function.method.call": dict(fg=f["fcall"], italic=True),
+        "@function.builtin": dict(fg=f["builtin"]), "@constructor": dict(fg=f["type"]),
+        "@type": dict(fg=f["type"]), "@type.builtin": dict(fg=f["builtin"]), "@module": dict(fg=f["type"]),
+        "@string": dict(fg=f["string"]), "@string.escape": dict(fg=f["escape"], bold=True), "@string.regexp": dict(fg=f["escape"]),
+        "@number": dict(fg=f["number"]), "@number.float": dict(fg=f["number"]), "@boolean": dict(fg=f["constant"]),
+        "@constant": dict(fg=f["constant"]), "@constant.builtin": dict(fg=f["constant"]),
+        "@variable": dict(fg=f["fg"]), "@variable.builtin": dict(fg=f["builtin"]), "@variable.parameter": dict(fg=f["param"]),
+        "@variable.member": dict(fg=f["property"]), "@property": dict(fg=f["property"]),
+        "@operator": dict(fg=f["operator"]), "@punctuation": dict(fg=f["punct"]), "@punctuation.bracket": dict(fg=f["punct"]),
+        "@punctuation.delimiter": dict(fg=f["punct"]), "@tag": dict(fg=f["keyword"]), "@tag.attribute": dict(fg=f["type"]),
+        "@tag.delimiter": dict(fg=f["punct"]), "@attribute": dict(fg=f["builtin"]),
+        "@markup.heading": dict(fg=e["highlight"], bold=True), "@markup.link": dict(fg=e["highlight"], underline=True),
+        "@markup.raw": dict(fg=f["string"]), "@markup.strong": dict(bold=True), "@markup.italic": dict(italic=True),
+        "@diff.plus": dict(fg=e["vc-added"]), "@diff.minus": dict(fg=e["vc-deleted"]), "@diff.delta": dict(fg=e["vc-modified"]),
+    }
+    def attrs(d):
+        return ", ".join(f'{k} = "{v}"' if isinstance(v, str) else f"{k} = {str(v).lower()}" for k, v in d.items())
+    lines = [f"-- {name} for Neovim. Generated by build.py from palette.toml. Edit the palette, not this file.",
+             "vim.cmd('highlight clear')", "if vim.fn.exists('syntax_on') then vim.cmd('syntax reset') end",
+             f"vim.o.background = '{'dark' if vname == 'dark' else 'light'}'", f"vim.g.colors_name = '{name}'",
+             "local hl = function(group, opts) vim.api.nvim_set_hl(0, group, opts) end"]
+    lines += [f'hl("{k}", {{ {attrs(v)} }})' for k, v in g.items()]
+    lines += [f'vim.g.terminal_color_{i} = "{c}"' for i, c in enumerate(ansi)]
+    return name, "\n".join(lines) + "\n"
+
+# ── bat (TextMate theme) ─────────────────────────────────────────────────
+
+def bat_theme(vname, e, f):
+    name = "laland" if vname == "dark" else "laland-light"
+    scopes = [
+        ("Comment", "comment, punctuation.definition.comment", f["comment"], "italic"),
+        ("String", "string, punctuation.definition.string", f["string"], ""),
+        ("Escape", "constant.character.escape, string.regexp", f["escape"], "bold"),
+        ("Number", "constant.numeric", f["number"], ""),
+        ("Constant", "constant.language, constant.other, support.constant", f["constant"], ""),
+        ("Keyword", "keyword, storage, storage.modifier, keyword.control", f["keyword"], ""),
+        ("Operator", "keyword.operator", f["operator"], ""),
+        ("Storage type", "storage.type", f["keyword"], ""),
+        ("Function", "entity.name.function, meta.function-call entity.name.function", f["function"], ""),
+        ("Function call", "variable.function, support.function", f["fcall"], "italic"),
+        ("Builtin", "support.function.builtin, variable.language, support.type.builtin", f["builtin"], ""),
+        ("Type", "entity.name.type, entity.name.class, support.type, support.class, entity.other.inherited-class", f["type"], ""),
+        ("Parameter", "variable.parameter", f["param"], ""),
+        ("Property", "variable.other.member, variable.other.property, meta.object-literal.key, support.type.property-name", f["property"], ""),
+        ("Punctuation", "punctuation, meta.brace", f["punct"], ""),
+        ("Tag", "entity.name.tag", f["keyword"], ""),
+        ("Attribute", "entity.other.attribute-name", f["type"], ""),
+        ("Heading", "markup.heading, entity.name.section", e["highlight"], "bold"),
+        ("Link", "markup.underline.link, string.other.link", e["highlight"], "underline"),
+        ("Inserted", "markup.inserted", e["vc-added"], ""),
+        ("Deleted", "markup.deleted", e["vc-deleted"], ""),
+        ("Changed", "markup.changed", e["vc-modified"], ""),
+        ("Invalid", "invalid", e["error"], ""),
+    ]
+    def item(n, scope, fg, style):
+        s = f"<key>fontStyle</key><string>{style}</string>" if style else ""
+        return (f"<dict><key>name</key><string>{n}</string><key>scope</key><string>{scope}</string>"
+                f"<key>settings</key><dict><key>foreground</key><string>{fg}</string>{s}</dict></dict>")
+    general = dict(background=e["bg"], foreground=f["fg"], caret=e["highlight"], selection=e["region"],
+                   lineHighlight=e["bg-alt"], gutterForeground=f["linenr"], invisibles=e["base4"])
+    gen = "".join(f"<key>{k}</key><string>{v}</string>" for k, v in general.items())
+    body = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<!-- laland for bat. Generated by build.py from palette.toml. -->\n'
+            '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n'
+            f'<plist version="1.0"><dict><key>name</key><string>{name}</string><key>settings</key><array>'
+            f'<dict><key>settings</key><dict>{gen}</dict></dict>'
+            + "".join(item(*s) for s in scopes) + "</array></dict></plist>\n")
+    return name, body
+
 # ── showcase ─────────────────────────────────────────────────────────────
 
 def swatches_html(vname, colors, specs, f):
@@ -521,6 +639,13 @@ def main():
         indent=2) + "\n")
     for v in VARIANTS:
         (dist / "emacs" / f"{THEME_NAMES[v]}-theme.el").write_text(doom_theme(v, pal[v], res[v][0]))
+    (dist / "nvim").mkdir(exist_ok=True)
+    (dist / "bat").mkdir(exist_ok=True)
+    for v in VARIANTS:
+        name, lua = nvim_colors(v, res[v][2], res[v][3])
+        (dist / "nvim" / f"{name}.lua").write_text(lua)
+        name, tm = bat_theme(v, res[v][2], res[v][3])
+        (dist / "bat" / f"{name}.tmTheme").write_text(tm)
     (dist / "kde").mkdir(exist_ok=True)
     for v in VARIANTS:
         name = "LalandDark" if v == "dark" else "LalandLight"
