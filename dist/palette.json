@@ -52,7 +52,8 @@
       "vc-added": "#40e779",
       "vc-deleted": "#ff7d7d",
       "modeline-bg": "#121829",
-      "modeline-bg-inactive": "#141b2e"
+      "modeline-bg-inactive": "#141b2e",
+      "dim": "#4b546c"
     }
   }
 }

@@ -143,8 +143,8 @@ def faces(e):
         "added-bg": blend(e["vc-added"], e["bg"], 0.2), "deleted-bg": blend(e["vc-deleted"], e["base3"], 0.2),
         "modeline": e["modeline-bg"],
         # outline-1..3 (doom-themes-base.el:1255-1257) feed org-level-1..3
-        "h1": e["blue"], "h2": e["magenta"], "h3": e["violet"], "h4": e["cyan"],
-        "org-todo": e["green"], "org-date": e["yellow"],
+        "h1": e["magenta"], "h2": e["violet"], "h3": lighten(e["violet"], 0.35), "h4": lighten(e["magenta"], 0.35),
+        "org-todo": e["orange"], "org-date": e["cyan"],
         "wk-key": e["green"], "wk-grp": e["violet"], "wk-cmd": e["blue"],
         "magit-heading": e["blue"], "magit-branch": e["cyan"],
         "orderless": blend(e["blue"], e["fg"], 0.6), "orderless-bg": blend(e["blue"], e["bg"], 0.1),
@@ -232,7 +232,52 @@ def doom_theme(vname, variant, colors, name=None):
    (doom-modeline-buffer-project-root :foreground green :weight 'bold)
    ;;;; solaire-mode
    (solaire-mode-line-face :inherit 'mode-line :background modeline-bg)
-   (solaire-mode-line-inactive-face :inherit 'mode-line-inactive :background modeline-bg-inactive))
+   (solaire-mode-line-inactive-face :inherit 'mode-line-inactive :background modeline-bg-inactive)
+   ;;;; Below ported from doom-dracula-theme.el:197-238 (its non-colorful headers, :109-116).
+   ;; Its base1 is its bg; ours sits darker, so "base1" there reads "bg" here. Its base4 is Lc 13 on its
+   ;; bg, ours Lc 40, so "dim" stands in: base4 pulled toward bg to the same Lc 13.
+   ;;;; markdown-mode
+   (markdown-markup-face :foreground base5)
+   (markdown-header-face :inherit 'bold :foreground red)
+   ((markdown-code-face &override) :background (doom-darken bg 0.075))
+   ;;;; outline <built-in>
+   ((outline-1 &override) :foreground magenta)
+   (outline-2 :inherit 'outline-1 :foreground violet)
+   (outline-3 :inherit 'outline-2 :foreground (doom-lighten violet 0.35))
+   (outline-4 :inherit 'outline-3 :foreground (doom-lighten magenta 0.35))
+   (outline-5 :inherit 'outline-4 :foreground (doom-lighten violet 0.6))
+   (outline-6 :inherit 'outline-5 :foreground (doom-lighten magenta 0.6))
+   (outline-7 :inherit 'outline-6 :foreground (doom-lighten violet 0.85))
+   (outline-8 :inherit 'outline-7 :foreground (doom-lighten magenta 0.85))
+   ;;;; org <built-in>
+   (org-agenda-date :foreground cyan)
+   (org-agenda-dimmed-todo-face :foreground comments)
+   (org-agenda-done :foreground dim)
+   (org-agenda-structure :foreground violet)
+   ((org-block &override) :background (doom-darken bg 0.125) :foreground violet)
+   ((org-block-begin-line &override) :background (doom-darken bg 0.125))
+   ((org-code &override) :foreground yellow)
+   (org-column :background bg)
+   (org-column-title :background bg :bold t :underline t)
+   (org-date :foreground cyan)
+   ((org-document-info &override) :foreground blue)
+   ((org-document-info-keyword &override) :foreground comments)
+   (org-done :foreground green :background base2 :weight 'bold)
+   (org-footnote :foreground blue)
+   (org-headline-done :foreground dim :strike-through nil)
+   ((org-link &override) :foreground green)
+   (org-priority :foreground cyan)
+   ((org-quote &override) :background (doom-darken bg 0.125))
+   (org-scheduled :foreground green)
+   (org-scheduled-previously :foreground yellow)
+   (org-scheduled-today :foreground orange)
+   (org-sexp-date :foreground dim)
+   ((org-special-keyword &override) :foreground yellow)
+   (org-table :foreground violet)
+   ((org-tag &override) :foreground (doom-lighten orange 0.3))
+   (org-todo :foreground orange :bold 'inherit :background (doom-darken bg 0.02))
+   (org-upcoming-deadline :foreground yellow)
+   (org-warning :foreground magenta))
 
   ;;;; Variable overrides
   ())

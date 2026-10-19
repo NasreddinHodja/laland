@@ -70,6 +70,7 @@ vc-added     = "green"
 vc-deleted   = "red"
 modeline-bg          = "darken:bg-alt:0.1"
 modeline-bg-inactive = "bg-alt"
+dim          = "blend:base4:bg:0.45"   # done headlines; Lc 13 like doom-dracula's base4 on its bg
 
 # ── light: same hues on blue-tinted paper, accents darkened to read on white ──
 [light.colors]
@@ -125,3 +126,4 @@ vc-added     = "green"
 vc-deleted   = "red"
 modeline-bg          = "darken:bg-alt:0.04"
 modeline-bg-inactive = "bg-alt"
+dim          = "blend:base4:bg:0.45"   # done headlines; Lc 13 like doom-dracula's base4 on its bg
