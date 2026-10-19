@@ -260,7 +260,7 @@ def firefox_vars(e):
         "urlbarview-background-color-selected": e["region"], "urlbarview-text-color-selected": e["fg"],
         "sidebar-background-color": e["bg-alt"], "sidebar-text-color": e["fg"], "sidebar-border-color": e["base3"],
         "chrome-content-separator-color": e["base3"],
-        "toolbarbutton-icon-fill": e["base7"],
+        "toolbarbutton-icon-fill": e["base7"], "toolbarbutton-icon-fill-attention": e["highlight"],
         "toolbarbutton-background-color-hover": e["base2"], "toolbarbutton-background-color-active": e["base3"],
         "color-accent-primary": e["highlight"], "color-accent-primary-hover": lighten(e["highlight"], 0.15),
         "color-accent-primary-active": darken(e["highlight"], 0.1), "button-text-color-primary": e["bg"],
